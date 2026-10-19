@@ -1,0 +1,6 @@
+schema = 1
+name = "tensorfold-plugin"
+module = "sparkrun_tensorfold_plugin"
+source = "src/sparkrun_tensorfold_plugin"
+repository = "https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin"
+sparkrun = ">=0.4.0,<0.5"
