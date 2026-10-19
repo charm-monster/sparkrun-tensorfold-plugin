@@ -1,0 +1,61 @@
+[build-system]
+requires = ["uv_build>=0.8.13,<0.9.0"]
+build-backend = "uv_build"
+
+[project]
+name = "sparkrun-tensorfold-plugin"
+version = "0.1.0"
+description = "sparkrun runtime plugin that launches tensorfold inference engines across one or more nodes from engine profiles"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Chad Armstrong", email = "chad@armstrong.tech" }]
+requires-python = ">=3.12"
+dependencies = ["sparkrun>=0.3.10,<0.5"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin"
+Issues = "https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin/issues"
+
+[project.entry-points."sparkrun.plugins"]
+tensorfold-plugin = "sparkrun_tensorfold_plugin"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+    "types-PyYAML>=6.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "ARG", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["sparkrun", "sparkrun.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["examples/profile-plugin"]
+python_files = ["test_*.py"]
+markers = [
+    "docker: needs a working local Docker daemon",
+]
