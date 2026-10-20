@@ -12,7 +12,7 @@ and SSH access.
 ### From git (managed install)
 
 ```sh
-sparkrun plugins add https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin --enable --trust
+sparkrun plugins add https://github.com/charm-monster/sparkrun-tensorfold-plugin --enable --trust
 ```
 
 sparkrun copies the plugin's source, records the commit, and asks for trust because plugin code
@@ -26,7 +26,7 @@ Use `--ref <tag-or-commit>` to pin a version. `--dry-run` shows what would be in
 If you install sparkrun as a `uv` tool, add this package to the same environment, then enable it:
 
 ```sh
-uv tool install sparkrun --with "git+https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin"
+uv tool install sparkrun --with "git+https://github.com/charm-monster/sparkrun-tensorfold-plugin"
 sparkrun plugins enable tensorfold-plugin
 ```
 
@@ -39,7 +39,7 @@ sparkrun 0.3.10 loads plugins from directories you list, and only when its exter
 is on.
 
 ```sh
-git clone https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin
+git clone https://github.com/charm-monster/sparkrun-tensorfold-plugin
 sparkrun setup features enable core.external_plugins
 ```
 
