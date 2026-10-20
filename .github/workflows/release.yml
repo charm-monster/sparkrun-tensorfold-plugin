@@ -41,6 +41,8 @@ jobs:
         with:
           ref: ${{ env.RELEASE_BRANCH }}
           token: ${{ secrets.RELEASE_PLEASE_PAT }}
+          # Amending the release commit needs its parent; a shallow clone would drop it.
+          fetch-depth: 0
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
       - name: Bring uv.lock to the release version
         run: |
