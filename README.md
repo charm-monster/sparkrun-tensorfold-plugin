@@ -36,10 +36,10 @@ Pick the line for your sparkrun version. Details and alternatives are in
 
 ```sh
 # sparkrun 0.4: install from git. Review the source first; sparkrun asks you to trust it.
-sparkrun plugins add https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin --enable --trust
+sparkrun plugins add https://github.com/charm-monster/sparkrun-tensorfold-plugin --enable --trust
 
 # sparkrun 0.3.10: clone, then point sparkrun at the plugin directory.
-git clone https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin
+git clone https://github.com/charm-monster/sparkrun-tensorfold-plugin
 sparkrun setup features enable core.external_plugins
 # add to ~/.config/sparkrun/config.yaml:
 #   plugins:

@@ -20,8 +20,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin"
-Issues = "https://github.com/iamchadarmstrong/sparkrun-tensorfold-plugin/issues"
+Homepage = "https://github.com/charm-monster/sparkrun-tensorfold-plugin"
+Issues = "https://github.com/charm-monster/sparkrun-tensorfold-plugin/issues"
 
 [project.entry-points."sparkrun.plugins"]
 tensorfold-plugin = "sparkrun_tensorfold_plugin"
