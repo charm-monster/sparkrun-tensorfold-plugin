@@ -5,14 +5,16 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+# Nothing is granted by default; each job asks for what it needs.
+permissions: {}
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     outputs:
       prs_created: ${{ steps.release.outputs.prs_created }}
     steps:
@@ -31,8 +33,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-please
     if: ${{ needs.release-please.outputs.prs_created == 'true' }}
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The push below needs the checkout's credentials.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1 # zizmor: ignore[artipacked]
         with:
           ref: release-please--branches--main
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
