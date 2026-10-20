@@ -11,6 +11,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+from importlib.metadata import version
 from pathlib import Path
 
 import pytest
@@ -139,7 +140,8 @@ def test_an_installed_plugin_is_listed_after_it_is_enabled(home: Path) -> None:
     listed = output(sparkrun(home, "plugins", "list"))
     row = next(line for line in listed.splitlines() if line.startswith("tensorfold-plugin"))
     assert row.split() == [
-        "tensorfold-plugin", "0.1.0", "installed", "enabled", "compatible", "none"
+        "tensorfold-plugin", version("sparkrun-tensorfold-plugin"),
+        "installed", "enabled", "compatible", "none",
     ]  # fmt: skip
 
 
