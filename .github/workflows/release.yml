@@ -12,9 +12,6 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     permissions: {}
-    outputs:
-      prs_created: ${{ steps.release.outputs.prs_created }}
-      prs: ${{ steps.release.outputs.prs }}
     steps:
       # The release PR is opened with a personal access token, not GITHUB_TOKEN, so it is authored
       # by the repository owner and the checks in test.yml run on it without approval.
@@ -24,36 +21,3 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_PAT }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
-
-  # release-please raises the version in pyproject.toml, which makes `uv sync --locked` fail until
-  # uv.lock records the same version. This puts that one line into the release PR's commit.
-  sync-lockfile:
-    runs-on: ubuntu-latest
-    needs: release-please
-    if: ${{ needs.release-please.outputs.prs_created == 'true' }}
-    permissions: {}
-    env:
-      RELEASE_BRANCH: ${{ fromJSON(needs.release-please.outputs.prs)[0].headBranchName }}
-    steps:
-      # The push below needs the checkout's credentials, and uses the same token as the release PR
-      # so that the checks run again on the commit it adds.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1 # zizmor: ignore[artipacked]
-        with:
-          ref: ${{ env.RELEASE_BRANCH }}
-          token: ${{ secrets.RELEASE_PLEASE_PAT }}
-          # Amending the release commit needs its parent; a shallow clone would drop it.
-          fetch-depth: 0
-      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
-      - name: Bring uv.lock to the release version
-        run: |
-          set -euo pipefail
-          uv lock
-          if git diff --quiet; then
-            echo "uv.lock already matches"
-            exit 0
-          fi
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          git add uv.lock
-          git commit --amend --no-edit
-          git push --force origin "HEAD:${RELEASE_BRANCH}"
