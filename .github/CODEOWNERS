@@ -1,0 +1,5 @@
+# Only the repository owner may change how the repository builds, tests and releases.
+/.github/ @iamchadarmstrong
+/SECURITY.md @iamchadarmstrong
+/release-please-config.json @iamchadarmstrong
+/.release-please-manifest.json @iamchadarmstrong
