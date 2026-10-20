@@ -113,7 +113,7 @@ class TensorfoldPluginRuntime(RuntimePlugin):
         self._bind(recipe, overrides)
 
     def validate_recipe(self, recipe: Recipe) -> list[Any]:
-        issues = super().validate_recipe(recipe)
+        issues: list[Any] = super().validate_recipe(recipe)
         try:
             block = self._block(recipe)
         except RecipeError as error:
@@ -272,11 +272,11 @@ class TensorfoldPluginRuntime(RuntimePlugin):
             *(kwargs.pop("extra_docker_opts", None) or []),
             *docker_options(profile, block),
         ]
-        previous = self.executor
+        previous: Any = self.executor  # type: ignore[has-type]
         self.executor = self._with_rank_options(cluster_id, profile, block, len(hosts))
         try:
             with self.master_address(master):
-                return self._run_native_cluster(
+                result: int = self._run_native_cluster(
                     hosts=hosts,
                     image=image,
                     serve_command=serve_command,
@@ -292,6 +292,7 @@ class TensorfoldPluginRuntime(RuntimePlugin):
                     node_label="tensorfold rank",
                     **kwargs,
                 )
+                return result
         finally:
             self.executor = previous
 
@@ -327,4 +328,5 @@ class TensorfoldPluginRuntime(RuntimePlugin):
     def _stop_cluster(  # type: ignore[override]
         self, hosts: list[str], cluster_id: str, config: Any = None, dry_run: bool = False
     ) -> int:
-        return self._stop_native_cluster(hosts, cluster_id, config=config, dry_run=dry_run)
+        stopped: int = self._stop_native_cluster(hosts, cluster_id, config=config, dry_run=dry_run)
+        return stopped
