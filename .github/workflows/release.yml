@@ -14,6 +14,7 @@ jobs:
     permissions: {}
     outputs:
       prs_created: ${{ steps.release.outputs.prs_created }}
+      prs: ${{ steps.release.outputs.prs }}
     steps:
       # The release PR is opened with a personal access token, not GITHUB_TOKEN, so it is authored
       # by the repository owner and the checks in test.yml run on it without approval.
@@ -31,12 +32,14 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.prs_created == 'true' }}
     permissions: {}
+    env:
+      RELEASE_BRANCH: ${{ fromJSON(needs.release-please.outputs.prs)[0].headBranchName }}
     steps:
       # The push below needs the checkout's credentials, and uses the same token as the release PR
       # so that the checks run again on the commit it adds.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1 # zizmor: ignore[artipacked]
         with:
-          ref: release-please--branches--main
+          ref: ${{ env.RELEASE_BRANCH }}
           token: ${{ secrets.RELEASE_PLEASE_PAT }}
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
       - name: Bring uv.lock to the release version
@@ -51,4 +54,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git add uv.lock
           git commit --amend --no-edit
-          git push --force origin HEAD:release-please--branches--main
+          git push --force origin "HEAD:${RELEASE_BRANCH}"
