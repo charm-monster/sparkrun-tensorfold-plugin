@@ -18,7 +18,14 @@
   "packages": {
     ".": {
       "release-type": "python",
-      "package-name": "sparkrun-tensorfold-plugin"
+      "package-name": "sparkrun-tensorfold-plugin",
+      "extra-files": [
+        {
+          "type": "toml",
+          "path": "uv.lock",
+          "jsonpath": "$.package[?(@.source.editable)].version"
+        }
+      ]
     }
   }
 }
