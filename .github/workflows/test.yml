@@ -39,5 +39,7 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
+      - name: Type-check against sparkrun ${{ matrix.sparkrun }}
+        run: uv run --with "sparkrun==${{ matrix.sparkrun }}" mypy src examples/profile-plugin/sparkrun_tensorfold_profile_hello_engine
       - name: Run tests against sparkrun ${{ matrix.sparkrun }}
         run: uv run --with "sparkrun==${{ matrix.sparkrun }}" pytest --cov=sparkrun_tensorfold_plugin --cov-report=term-missing
