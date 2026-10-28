@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "sparkrun-tensorfold-plugin"
-version = "0.1.1"
+version = "0.1.2"
 description = "sparkrun runtime plugin that launches tensorfold inference engines across one or more nodes from engine profiles"
 readme = "README.md"
 license = "MIT"

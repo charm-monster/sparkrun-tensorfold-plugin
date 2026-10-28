@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/charm-monster/sparkrun-tensorfold-plugin/compare/v0.1.1...v0.1.2) (2026-10-28)
+
+
+### Continuous Integration
+
+* bump the actions group with 2 updates ([73a4577](https://github.com/charm-monster/sparkrun-tensorfold-plugin/commit/73a4577fa61a1e9b317eccd1a4c4d861fd3ebbb6))
+
 ## 0.1.1 (2026-10-21)
 
 
