@@ -17,6 +17,7 @@ profiles live in their own packages, never here; `examples/` holds a fictional o
 
 ## Rules (full text in `.claude/rules/`)
 
+* `merit.md`: a solution chosen for any reason other than its merit is not allowed.
 * `ssot.md`: one declaration site per concept; audit greps must return zero matches.
 * `no-fallbacks.md`: a missing or invalid value raises. No default substitutions.
 * `testing.md`: a test is valid only if it fails when the behavior it checks is broken.
